@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -75,6 +78,13 @@ public class MainActivity extends AppCompatActivity {
         listaTeste = findViewById(R.id.listaPai);
         listaTeste.setAdapter(new listaPai(this, lstClientes, lstGrupos, lstNivel2));
 
+        Log.d("cliente", String.valueOf(lstClientes.size()));
+        Log.d("grupo", String.valueOf(lstGrupos.size()));
+        Log.d("checklist1", String.valueOf(lstCheckList1.size()));
+        Log.d("checklist2", String.valueOf(lstCheckList2.size()));
+        Log.d("Nivel 2 Pai", String.valueOf(lstNivel2.size()));
+
+
     }
 
     public class listaPai extends BaseExpandableListAdapter {
@@ -101,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public int getChildrenCount(int i) {
             //retornar quantidade de grupos no cliente
-            return lstGrupos.size();
+            return 1;
         }
 
         @Override
@@ -126,12 +136,15 @@ public class MainActivity extends AppCompatActivity {
 
 
         @Override
+
         public long getChildId(int i, int i1) {
             // retorna o id do grupo do cliente, porém como nesse exemplo
             // o grupo do cliente não possui um id específico, o retorno
             // será o próprio i1
             return i1;
         }
+
+
 
         @Override
         public View getGroupView(int i, boolean b, View contextView, ViewGroup viewGroup) {
@@ -143,6 +156,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             TextView nomeCliente = contextView.findViewById(R.id.listaCliente);
+            nomeCliente.setBackgroundColor(Color.RED);
+            nomeCliente.setTextSize(20);
             nomeCliente.setText((String) getGroup(i));
             return contextView;
 
@@ -182,8 +197,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         protected void onMeasure(int laguraMedida, int alturaMedida) {
-            laguraMedida = MeasureSpec.makeMeasureSpec(960, MeasureSpec.AT_MOST);
-            alturaMedida = MeasureSpec.makeMeasureSpec(600, MeasureSpec.AT_MOST);
+            laguraMedida = MeasureSpec.makeMeasureSpec(450, MeasureSpec.AT_MOST);
+            alturaMedida = MeasureSpec.makeMeasureSpec(450, MeasureSpec.AT_MOST);
             super.onMeasure(laguraMedida, alturaMedida);
 
         }
@@ -206,7 +221,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getGroupCount() {
-            return 1;
+            //retornar quantidade de grupos no cliente
+            return lstGrupos.size();
         }
 
         @Override
@@ -246,6 +262,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             TextView nomeGrupo = contextView.findViewById(R.id.listaGrupo);
+            nomeGrupo.setTextSize(15);
+            nomeGrupo.setBackgroundColor(Color.BLUE);
             nomeGrupo.setText((String) getGroup(i));
 
             return contextView;
@@ -266,6 +284,8 @@ public class MainActivity extends AppCompatActivity {
 
             Tarefa tarefa = (Tarefa) getChild(i, i1);
 
+            nomeTarefa.setBackgroundColor(Color.BLACK);
+            nomeTarefa.setTextSize(15);
             nomeTarefa.setText(tarefa.getTarefa());
             nomeChBox.setChecked(tarefa.getChecked());
 
